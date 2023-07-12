@@ -1,10 +1,9 @@
+let herosList = document.getElementById("heros-list")
 let showContainer = document.getElementById("show-container");
 let button = document.getElementById("submit-button");
 let listContainer = document.querySelector(".list");
 let input = document.getElementById("input-box")
 let searchForm = document.getElementById("search-form");
-let favouriteHerosList = document.getElementById("favourite-list");
-let favouriteButton = document.getElementById("favourite-button");
 
 let public_key = "1d3f2c7b6bc4a443bfd66614b109b53b";
 let hashVal = "c4406b6e3fdf1ce83a60f7febc29b823";
@@ -12,27 +11,97 @@ ts = 1688233720739;
 let date = new Date();
 console.log(date.getTime());
 
-const getInputValue =( (e)=>{
+const [timestamp, apikey, hashValue] = [ts, public_key, hashVal];
+
+
+
+if (localStorage.getItem("myhero") == null) {
+  localStorage.setItem("myhero", JSON.stringify([]));
+} else {
+
+  var myHeroId = JSON.parse(localStorage.getItem("myhero"));
+
+}
+
+// function used to add character id in myhero key in 
+function seeMore(id) {
+  for (let i = 0; i < myHeroId.length; i++) {
+    myHeroId.pop();
+  }
+  myHeroId.push(id);
+  localStorage.setItem("myhero", JSON.stringify(myHeroId));
+}
+
+// make a favourites key for storing all favourites hero's id in local storage if not available
+if (localStorage.getItem("favourites") == null) {
+  localStorage.setItem("favourites", JSON.stringify([]));
+} else {
+  var arr = JSON.parse(localStorage.getItem("favourites"));
+}
+
+
+// function for adding id value in local storage 
+function addFavourite(id) {
+  if (!arr.includes(id) == true) {
+    arr.push(id);
+    localStorage.setItem("favourites", JSON.stringify(arr));
+    alert("Hero is added to your favourite heros")
+  } else {
+    alert("This hero is already existed in your list")
+  }
+}
+
+// function to show list of favourite superheroes...
+async function showHerosList() {
+  let url = `http://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&limit=100`;
+
+
+  let response = await fetch(url);
+  let jsonData = await response.json();
+
+  jsonData.data["results"].forEach((element) => {
+    herosList.innerHTML += `
+    <div class="card l" style="width: 18rem;">
+      <img src="${element.thumbnail["path"] + "." + element.thumbnail["extension"]
+      }" class="card-img-top" alt="hero image">
+      <div class="card-body ">
+        <h5 class="card-title">${element.name}</h5>
+       
+    <a href="myHero.html"  class="btn btn-primary listButton" onclick="seeMore(${element.id})">See More</a>
+    <a data-href="favourites.html"  id="favourite-button" class="btn btn-primary listButton" target="_blank" onclick="addFavourite(${element.id})">Add to Favourite</a>
+      
+      </div>
+    </div>
+    `
+
+  })
+}
+
+showHerosList();
+
+
+
+const getInputValue = ((e) => {
   e.preventDefault();
   var searchText = input.value;
 })
 
 searchForm.addEventListener('submit', getInputValue);
 
-const [timestamp, apikey, hashValue] = [ts, public_key, hashVal];
 
-function removeElement(){
+function removeElement() {
   listContainer.innerHTML = "";
 }
 
-function displayWord(word){
+function displayWord(word) {
   input.value = word;
   removeElement();
 }
 
-input.addEventListener("keyup" , async()=>{
+// here we are autocompletimg the name of the superheroes 
+input.addEventListener("keyup", async () => {
   removeElement();
-  if(input.value.length < 2){
+  if (input.value.length < 2) {
     return false;
   }
 
@@ -41,7 +110,7 @@ input.addEventListener("keyup" , async()=>{
   let response = await fetch(url);
   let jsonData = await response.json();
 
-  jsonData.data["results"].forEach((heros)=>{
+  jsonData.data["results"].forEach((heros) => {
     let name = heros.name;
     let div = document.createElement("div");
     div.style.cursor = "pointer";
@@ -52,123 +121,41 @@ input.addEventListener("keyup" , async()=>{
     div.innerHTML = `<p>${word}</p>`;
     listContainer.appendChild(div);
   })
-  
+
 })
-button.addEventListener("click", (getResult = async ()=>{
-    if (input.value.trim().length < 1) {
-        console.log("Invalid input");
-    }
-    listContainer.innerHTML = "";
-    showContainer.innerHTML = "";
-    
-    var searchText =input.value;
-    let url = `http://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&name=${searchText}`;
-    
 
-    let response = await fetch(url);
-    let jsonData = await response.json();
+// here we are fetching the search from the api
 
-    jsonData.data["results"].forEach((element) => {
-      
-        showContainer.innerHTML = `
+button.addEventListener("click", (getResult = async () => {
+  if (input.value.trim().length < 1) {
+    console.log("Invalid input");
+  }
+  listContainer.innerHTML = "";
+  showContainer.innerHTML = "";
+
+  var searchText = input.value;
+  let url = `http://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&name=${searchText}`;
+
+
+  let response = await fetch(url);
+  let jsonData = await response.json();
+
+  jsonData.data["results"].forEach((element) => {
+
+    showContainer.innerHTML = `
         <div class="card" style="width: 18rem;">
-  <img src="${
-    element.thumbnail["path"]+"."+ element.thumbnail["extension"]
-  }" class="card-img-top" alt="hero image">
+  <img src="${element.thumbnail["path"] + "." + element.thumbnail["extension"]
+      }" class="card-img-top" alt="hero image">
   <div class="card-body">
     <h5 class="card-title">${element.name}</h5>
-    <p class="card-text">${element.description}</p>
-    <a href="favourites.html" class="btn btn-primary">See More</a>
-     <a href="" onclick="addToFavourite" id="favourite-button" class="btn btn-primary">Add to Favourite</a>
+    <a href="myHero.html" class="btn btn-primary" onclick="seeMore(${element.id})">See More</a>
+     <a data-href="favourites.html"  id="favourite-button" class="btn btn-primary" target="_blank" onclick="addFavourite(${element.id})">Add to Favourite</a>
+     
   
   </div>
 </div>
         
         `
-    })
+  })
 }))
 
-
-
-// favouriteButton.addEventListener('click', ()=>{
-//   let heroList = document.createElement("ul");
-//   heroList.innerHTML += `
-//     <li>
-//       <h5 class="card-title">${input.value.name}</h5>
-//       <button>remove</button>
-//     </li>
-//   ` 
-// })
-
-
-window.onload = ()=>{
-  getResult();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let url = "http://gateway.marvel.com/v1/public/characters?ts=1&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=78b328b363a1756aef6ddc4accc12074";
-
-// let  response = fetch(url);
-// response.then((value)=>{
-//     return value.json();
-// }).then((heros)=>{
-//     for(items in heros){
-//     console.log((heros[items].results));
-//     }
-//     card_container.innerHTML += `
-//     <div class="card" style="width: 18rem;">
-//     <img src="..." class="card-img-top" alt="...">
-//     <div class="card-body">
-//       <h5 class="card-title">${heros[1].name}</h5>
-//       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-//       <a href="#" class="btn btn-primary">Go somewhere</a>
-//     </div>
-//   </div`
-
-// })
-
-// function heroCard(){
-//     let heros = response();
-//     card_container.innerHTML = `
-//     <div class="card" style="width: 18rem;">
-//     <img src="..." class="card-img-top" alt="...">
-//     <div class="card-body">
-//       <h5 class="card-title">${heros[search_input.value].name}</h5>
-//       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-//       <a href="#" class="btn btn-primary">Go somewhere</a>
-//     </div>
-//   </div>
-//   `
-// }
-
-// search_button.addEventListener('click',heroCard);

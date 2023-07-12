@@ -1,0 +1,116 @@
+:root {
+    --btncolor: #F0131E;
+    --back_color: rgb(20, 1, 1);
+    --white: #ffffff;
+}
+
+/* setting background color for all pages */
+
+body {
+    background-color: var(--back_color);
+
+}
+
+/* setting the marvel logo in the nav*/
+
+nav img {
+    width: 5vw;
+}
+
+.nav-item:hover {
+    background-color: var(--btncolor);
+    border-radius: 10px;
+}
+
+/* setting the dimension of marvel image at the top */
+
+#marvel-image {
+
+    min-width: 60%;
+    height: 30vh;
+    margin-left: 20%;
+    margin-right: 20%;
+    mix-blend-mode: lighten;
+}
+
+.text-color {
+    color: var(--white);
+
+}
+
+/* setting everything in the main section */
+
+section {
+    display: flex;
+}
+
+#search-form {
+    position: relative;
+    right: 5%;
+}
+
+.card_container {
+    position: relative;
+
+}
+
+/* arranging the cards in favourite every list */
+
+.superhero-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row wrap;
+}
+
+.card-body {
+    background-color: var(--back_color);
+    color: var(--white);
+
+}
+
+.card {
+    border: 3px solid var(--btncolor);
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.btn {
+    background-color: var(--btncolor);
+    border: var(--btncolor);
+    color: var(--white);
+}
+
+#submit-button {
+    color: var(--white);
+}
+
+/* setting the design for myhero page */
+
+
+#about-hero-container {
+    display: flex;
+    margin: 5rem;
+    border: 3px solid var(--btncolor);
+    padding: 1rem;
+}
+
+.hero-image {
+    width: 35%;
+    height: 50vh;
+}
+
+.hero-title {
+    color: var(--btncolor);
+    margin: 1rem;
+}
+
+.hero-description {
+    font-family: 'Monospace';
+    font-size: larger;
+}
+
+.heading {
+    text-align: center;
+    padding: 1rem;
+    color: var(--btncolor);
+}
