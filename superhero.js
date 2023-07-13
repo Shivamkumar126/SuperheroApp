@@ -105,7 +105,7 @@ input.addEventListener("keyup", async () => {
     return false;
   }
 
-  let url = `http://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&nameStartsWith=${input.value}`;
+  let url = `HTTPS://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&nameStartsWith=${input.value}`;
 
   let response = await fetch(url);
   let jsonData = await response.json();
@@ -134,7 +134,7 @@ button.addEventListener("click", (getResult = async () => {
   showContainer.innerHTML = "";
 
   var searchText = input.value;
-  let url = `http://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&name=${searchText}`;
+  let url = `HTTPS://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&name=${searchText}`;
 
 
   let response = await fetch(url);
