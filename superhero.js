@@ -53,7 +53,7 @@ function addFavourite(id) {
 
 // function to show list of favourite superheroes...
 async function showHerosList() {
-  let url = `http://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&limit=100`;
+  let url = `HTTPS://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=${apikey}&hash=${hashValue}&limit=100`;
 
 
   let response = await fetch(url);
