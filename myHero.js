@@ -10,7 +10,7 @@ let html="";
 
 async function  fetchHero(){
     for (let i = 0; i < idarray.length; i++) {
-     let response = await fetch(`http://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${idarray[i]}`)
+     let response = await fetch(`HTTPS://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${idarray[i]}`)
      let jData = await response.json()
         jData.data["results"].forEach((element) => {
 

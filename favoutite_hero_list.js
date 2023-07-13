@@ -26,7 +26,7 @@ function seeMore(id) {
 
 async function fetchData() {
   for (let i = 0; i < arr.length; i++) {
-    let response = await fetch(`http://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${arr[i]}`)
+    let response = await fetch(`HTTPS://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${arr[i]}`)
     let jData = await response.json()
     jData.data["results"].forEach((element) => {
       favouriteHerosList.innerHTML += ` <div class="card "  style="width: 18rem;">
