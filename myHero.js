@@ -5,7 +5,7 @@ var seriesInfo = document.getElementById("series");
 
 
 
-function addComic(){
+function addComic() {
   console.log("visible");
   comicInfo.classList.add("visible");
   comicInfo.classList.remove("invisible");
@@ -16,7 +16,7 @@ function addComic(){
   eventInfo.classList.add("invisible");
 }
 
-function addSeries(){
+function addSeries() {
   console.log("visible");
   comicInfo.classList.add("invisible");
 
@@ -24,9 +24,10 @@ function addSeries(){
   seriesInfo.classList.remove("invisible");
 
 
-  eventInfo.classList.add("invisible");}
+  eventInfo.classList.add("invisible");
+}
 
-function addEvents(){
+function addEvents() {
   console.log("visible");
   comicInfo.classList.add("invisible");
 
@@ -44,26 +45,25 @@ var idarray = JSON.parse(localStorage.getItem("myhero"));
 
 //function to show the details of the desired superhoero by fetching details through id of the character.
 
-let html="";
+let html = "";
 
 
 
-async function  fetchHero(){
-    for (let i = 0; i < idarray.length; i++) {
-     let response = await fetch(`HTTPS://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${idarray[i]}`)
-     let jData = await response.json()
-        jData.data["results"].forEach((element) => {
+async function fetchHero() {
+  for (let i = 0; i < idarray.length; i++) {
+    let response = await fetch(`HTTPS://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${idarray[i]}`)
+    let jData = await response.json()
+    jData.data["results"].forEach((element) => {
 
-          console.log(element);
+      console.log(element);
 
-        html += ` <div class="about-hero-container">
+      html += ` <div class=" hero-container">
         
-          <img src="${
-            element.thumbnail["path"]+"."+ element.thumbnail["extension"]
-          }" class="hero-image" alt="hero image">
+          <img src="${element.thumbnail["path"] + "." + element.thumbnail["extension"]
+        }" class="hero-image" alt="hero image">
           <div class="card-body">
             <h2 class="hero-title">${element.name}</h2>
-            <p class="hero-description"><span class="description">Description : </span>${element.description? `${element.description}` : "# Not Available"}</p>
+            <p class="hero-description"><span class="description">Description : </span>${element.description ? `${element.description}` : "# Not Available"}</p>
             <button class="info_btn" onclick="addComic()">Comics (${element.comics.available})</button>
 
             <button class="info_btn" onclick="addSeries()">Series (${element.series.available})</button>
@@ -74,23 +74,23 @@ async function  fetchHero(){
         </div> 
        
         `;
-          
-        });
 
-      
-    };
+    });
+
+
+  };
 };
 
-async function  fetchComicInfo(){
+async function fetchComicInfo() {
   for (let i = 0; i < idarray.length; i++) {
-   let response = await fetch(`HTTPS://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${idarray[i]}`)
-   let jData = await response.json()
-      jData.data["results"].forEach((element) => {
+    let response = await fetch(`HTTPS://gateway.marvel.com/v1/public/characters?ts=1688233720739&apikey=1d3f2c7b6bc4a443bfd66614b109b53b&hash=c4406b6e3fdf1ce83a60f7febc29b823&id=${idarray[i]}`)
+    let jData = await response.json()
+    jData.data["results"].forEach((element) => {
 
-        console.log(element);
-     
-      element.comics["items"].forEach((comic)=>{ 
-        comicInfo.innerHTML +=`
+      console.log(element);
+
+      element.comics["items"].forEach((comic) => {
+        comicInfo.innerHTML += `
         <div >
         <div class="card-body">
           <a href=${comic.resourceURI}  class="btn btn-primary listButton" >${comic.name}</a>
@@ -100,8 +100,8 @@ async function  fetchComicInfo(){
       </div> 
         `
       })
-      element.series["items"].forEach((series)=>{ 
-        seriesInfo.innerHTML +=`
+      element.series["items"].forEach((series) => {
+        seriesInfo.innerHTML += `
         <div >
         <div class="card-body">
           <a href=${series.resourceURI}  class="btn btn-primary listButton" >${series.name}</a>
@@ -111,8 +111,8 @@ async function  fetchComicInfo(){
       </div> 
         `
       })
-      element.events["items"].forEach((event)=>{ 
-        eventInfo.innerHTML +=`
+      element.events["items"].forEach((event) => {
+        eventInfo.innerHTML += `
         <div >
         <div class="card-body">
           <a href=${event.resourceURI}  class="btn btn-primary listButton" >${event.name}</a>
@@ -123,14 +123,14 @@ async function  fetchComicInfo(){
         `
       })
 
-      });
+    });
 
-    
+
   };
 };
 fetchHero();
 fetchComicInfo();
 
 setTimeout(() => {
-  heroInfo.innerHTML=html;
+  heroInfo.innerHTML = html;
 }, 1000);
