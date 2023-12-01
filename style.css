@@ -86,10 +86,14 @@ section {
 
 /* setting the design for myhero page */
 
+#main{
+}
 
-#about-hero-container {
+
+
+.about-hero-container {
     display: flex;
-    margin: 5rem;
+    margin: 3rem;
     border: 3px solid var(--btncolor);
     padding: 1rem;
 }
@@ -102,15 +106,52 @@ section {
 .hero-title {
     color: var(--btncolor);
     margin: 1rem;
+    font-size: 50px;
 }
 
 .hero-description {
     font-family: 'Monospace';
-    font-size: larger;
+    font-size: 30px;
 }
 
 .heading {
     text-align: center;
     padding: 1rem;
     color: var(--btncolor);
+}
+
+.description{
+    color:#F0131E;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.info{
+    display: flex;
+    flex-wrap: wrap;
+position: absolute; 
+ border: 3px solid var(--btncolor);
+text-align: center;
+visibility: hidden;
+margin: 0 3rem;
+ 
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.visible{
+    visibility: visible;
+}
+
+.info_btn{
+    background-color: var(--btncolor);
+    border: var(--btncolor);
+    color: var(--white);
+    width: auto;
+    height: 2rem;
+    margin: 1rem 3rem;
+    font-size: 20px;
+    font-weight: 700;
 }

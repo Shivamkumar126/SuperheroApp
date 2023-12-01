@@ -41,7 +41,7 @@ if (localStorage.getItem("favourites") == null) {
 
 
 // function for adding id value in local storage 
-function addFavourite(id) {
+function addFavourite(id , favourite) {
   if (!arr.includes(id) == true) {
     arr.push(id);
     localStorage.setItem("favourites", JSON.stringify(arr));
@@ -49,6 +49,13 @@ function addFavourite(id) {
   } else {
     alert("This hero is already existed in your list")
   }
+ if(favourite){
+  let icon = document.getElementsByClassName("icon");
+  console.log(id);
+  icon.classList.add(".red_heart")
+ }
+
+  
 }
 
 // function to show list of favourite superheroes...
@@ -58,17 +65,19 @@ async function showHerosList() {
 
   let response = await fetch(url);
   let jsonData = await response.json();
+  console.log(jsonData);
 
   jsonData.data["results"].forEach((element) => {
     herosList.innerHTML += `
     <div class="card l" style="width: 18rem;">
+ 
       <img src="${element.thumbnail["path"] + "." + element.thumbnail["extension"]
       }" class="card-img-top" alt="hero image">
       <div class="card-body ">
         <h5 class="card-title">${element.name}</h5>
        
     <a href="myHero.html"  class="btn btn-primary listButton" onclick="seeMore(${element.id})">See More</a>
-    <a data-href="favourites.html"  id="favourite-button" class="btn btn-primary listButton" target="_blank" onclick="addFavourite(${element.id})">Add to Favourite</a>
+    <a data-href="favourites.html"  id="favourite-button" class="btn btn-primary listButton" target="_blank" onclick="addFavourite(${element.id},true)">Add to Favourite</a>
       
       </div>
     </div>
