@@ -41,7 +41,7 @@ if (localStorage.getItem("favourites") == null) {
 
 
 // function for adding id value in local storage 
-function addFavourite(id , favourite) {
+function addFavourite(id ) {
   if (!arr.includes(id) == true) {
     arr.push(id);
     localStorage.setItem("favourites", JSON.stringify(arr));
@@ -49,11 +49,7 @@ function addFavourite(id , favourite) {
   } else {
     alert("This hero is already existed in your list")
   }
- if(favourite){
-  let icon = document.getElementsByClassName("icon");
-  console.log(id);
-  icon.classList.add(".red_heart")
- }
+
 
   
 }
@@ -77,7 +73,7 @@ async function showHerosList() {
         <h5 class="card-title">${element.name}</h5>
        
     <a href="myHero.html"  class="btn btn-primary listButton" onclick="seeMore(${element.id})">See More</a>
-    <a data-href="favourites.html"  id="favourite-button" class="btn btn-primary listButton" target="_blank" onclick="addFavourite(${element.id},true)">Add to Favourite</a>
+    <a data-href="favourites.html"  id="favourite-button" class="btn btn-primary listButton" target="_blank" onclick="addFavourite(${element.id})">Add to Favourite</a>
       
       </div>
     </div>
